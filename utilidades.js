@@ -1,4 +1,4 @@
-// utilidades.js - Funciones auxiliares
+// utilidades.js - Funciones auxiliares - VERSION 3.0
 
 // Función para mostrar mensajes
 function mostrarMensaje(mensaje, tipo) {
@@ -28,4 +28,9 @@ function mostrarMensaje(mensaje, tipo) {
 // Función para validar texto
 function validarTexto(texto) {
     return texto.trim().length > 0;
+}
+
+// NUEVA FUNCIONALIDAD: Contar tareas completadas
+function contarCompletadas(tareas) {
+    return tareas.filter(t => t.completada).length;
 }

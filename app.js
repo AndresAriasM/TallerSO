@@ -1,4 +1,4 @@
-// app.js - Lógica principal de la aplicación - VERSION 2.0
+// app.js - Lógica principal de la aplicación - VERSION 3.0
 
 let tareas = [];
 
@@ -12,17 +12,23 @@ function agregarTarea() {
         return;
     }
     
-    tareas.push(textoTarea);
+    tareas.push({ texto: textoTarea, completada: false });
     input.value = '';
     
     mostrarMensaje('Tarea agregada exitosamente', 'exito');
     renderizarTareas();
 }
 
-// NUEVA FUNCIONALIDAD: Función para eliminar tarea
+// Función para eliminar tarea
 function eliminarTarea(index) {
     tareas.splice(index, 1);
     mostrarMensaje('Tarea eliminada', 'exito');
+    renderizarTareas();
+}
+
+// NUEVA FUNCIONALIDAD: Marcar tarea como completada
+function completarTarea(index) {
+    tareas[index].completada = !tareas[index].completada;
     renderizarTareas();
 }
 
@@ -33,8 +39,14 @@ function renderizarTareas() {
     
     tareas.forEach((tarea, index) => {
         const li = document.createElement('li');
+        li.style.textDecoration = tarea.completada ? 'line-through' : 'none';
+        li.style.opacity = tarea.completada ? '0.6' : '1';
+        
         li.innerHTML = `
-            <span>${index + 1}. ${tarea}</span>
+            <input type="checkbox" ${tarea.completada ? 'checked' : ''} 
+                   onclick="completarTarea(${index})" 
+                   style="margin-right: 10px; cursor: pointer;">
+            <span>${index + 1}. ${tarea.texto}</span>
             <button onclick="eliminarTarea(${index})" style="float: right; background: #ff6b6b;">
                 Eliminar
             </button>
